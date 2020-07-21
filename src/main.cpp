@@ -1,33 +1,41 @@
 #include <iostream>
-#include <regex>
-#include <bitset>
-#include <vector>
-#include <ccomplex>
-#include <sys/stat.h>
-#include <unistd.h>
 #include <string>
 #include <fstream>
 
 using namespace std;
 
+static char *dt4 = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
+static char *dt5 = "<!DOCTYPE html>";
+
 int main(int argc, char *argv[])
 {
-    if (sizeof(argv[0]) != 0)
+    cout << "HTML Document Generator" << endl
+         << "Version 0.1.2" << endl;
+    if (argv[0] != "")
     {
         try
         {
-            FILE doc = fopen(argv[0], "w+");
-            if (sizeof(argv[1]) != 0 && argv[1] == "-html4")
+            FILE *doc = fopen(argv[0], "w+");
+            std::cout << "[INFO] Generating HTML Document..." << std::endl;
+            if (argv[1] == "-html4")
             {
-                fwrite("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-            } else{
-                fwrite("<!DOCTYPE html>");
+                fwrite(dt4, sizeof(dt4), sizeof(dt4), doc);
+                cout << "[INFO] Using HTML 4.01" << endl;
             }
-            fclose(doc);
+            else
+            {
+                fwrite(dt5, sizeof(dt5), sizeof(dt5), doc);
+                std::cout << "[WARN] No HTML Version specified. Defaulting to HTML5" << std::endl;
+            }
+            //fclose(doc);
         }
         catch (const std::exception &)
         {
         }
+    }
+    else
+    {
+        std::cout << "Usage: htgen <output.html> [-html4|-xhtml]" << std::endl;
     }
     return 0;
 }
