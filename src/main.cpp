@@ -67,7 +67,7 @@ size_t len = sizeof(pBuf);
         }
         catch (const std::exception &e)
         {
-            cout << "[ERR] HTML Document Creation failed." << endl;
+            cout << "HTML Document Creation failed." << endl;
         }
     }
     else
